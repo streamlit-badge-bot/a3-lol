@@ -55,14 +55,16 @@ brush = alt.selection(type='interval', encodings=['y'])
 
 chart = alt.Chart(df).mark_bar().encode(
     x=alt.X(option_field, scale=alt.Scale(zero=False),),
-    y=alt.Y("Major", scale=alt.Scale(zero=False), sort = '-x'),
+    y=alt.Y("Major", scale=alt.Scale(zero=False),
+            sort = '-x', 
+            axis=alt.Axis(labelOverlap=True)),
     color=alt.Y("Major_category"),
     opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.4)),
     tooltip=["Major", "Major_category", option_field]
 ).add_selection(
     brush
 ).properties(
-    width=1500, height=2000
+    width=1000, height=750
 )
 
 line = alt.Chart(df).mark_rule(color='firebrick').encode(
@@ -71,7 +73,7 @@ line = alt.Chart(df).mark_rule(color='firebrick').encode(
 ).transform_filter(
     brush
 ).properties(
-    width=1500, height=2000
+    width=1000, height=750
 )
 
 st.write(alt.layer(chart, line))
