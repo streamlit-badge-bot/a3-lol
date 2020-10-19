@@ -18,11 +18,11 @@ df = load_data()
 
 st.write("Here is the visualization you can play with!")
 
-# side bar #
+# slect box #
 useful_cols = [df.columns[i] \
                for i in range(len(df.columns)) if i not in [0,1,2,6]]
 
-option_field = st.sidebar.selectbox(
+option_field = st.selectbox(
     'Choose a field!',
      useful_cols)  
 
@@ -45,13 +45,13 @@ explanations = { "Total"        :"Total number of people with major",
                 "Low_wage_jobs" :"Number in low-wage service jobs"
                 }
 
-st.sidebar.write(explanations[option_field])
+st.write(explanations[option_field])
 
-# side bar end #
+# slect box end #
 
 # first visualization #
 
-brush = alt.selection(type='interval', encodings=['y'])
+avg_brush = alt.selection(type='interval', encodings=['y'])
 
 chart = alt.Chart(df).mark_bar().encode(
     x=alt.X(option_field, scale=alt.Scale(zero=False),),
@@ -59,22 +59,25 @@ chart = alt.Chart(df).mark_bar().encode(
             sort = '-x', 
             axis=alt.Axis(labelOverlap=True)),
     color=alt.Y("Major_category"),
-    opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.4)),
+    opacity=alt.condition(avg_brush, alt.OpacityValue(1), alt.OpacityValue(0.4)),
     tooltip=["Major", "Major_category", option_field]
 ).add_selection(
-    brush
+    avg_brush
 ).properties(
     width=1000, height=750
 )
 
-line = alt.Chart(df).mark_rule(color='firebrick').encode(
+avg_line = alt.Chart(df).mark_rule(color='firebrick').encode(
     x='mean(' + option_field + '):Q',
     size=alt.SizeValue(3)
 ).transform_filter(
-    brush
+    avg_brush
 ).properties(
     width=1000, height=750
 )
 
-st.write(alt.layer(chart, line))
+visual_1 = alt.layer(chart, avg_line)
+
+st.write(visual_1)
+
 # first visualization end #
