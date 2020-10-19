@@ -50,14 +50,29 @@ st.sidebar.write(explanations[option_field])
 # side bar end #
 
 # first visualization #
+
+brush = alt.selection(type='interval', encodings=['y'])
+
 chart = alt.Chart(df).mark_bar().encode(
     x=alt.X(option_field, scale=alt.Scale(zero=False),),
     y=alt.Y("Major", scale=alt.Scale(zero=False), sort = '-x'),
     color=alt.Y("Major_category"),
+    opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.4)),
     tooltip=["Major", "Major_category", option_field]
+).add_selection(
+    brush
 ).properties(
     width=1500, height=2000
 )
 
-st.write(chart)
+line = alt.Chart(df).mark_rule(color='firebrick').encode(
+    x='mean(' + option_field + '):Q',
+    size=alt.SizeValue(3)
+).transform_filter(
+    brush
+).properties(
+    width=1500, height=2000
+)
+
+st.write(alt.layer(chart, line))
 # first visualization end #
