@@ -81,3 +81,30 @@ visual_1 = alt.layer(chart, avg_line)
 st.write(visual_1)
 
 # first visualization end #
+
+# second visualization #
+option_field_x = st.selectbox(
+    'Choose a field for the x-axis!',
+     useful_cols)  
+
+option_field_y = st.selectbox(
+    'Choose a field for the y-axis!',
+     useful_cols)  
+
+visual_2 = alt.Chart(df).mark_circle().encode(
+    x=alt.X(option_field_x, 
+            scale=alt.Scale(zero=False),
+            axis=alt.Axis(labelOverlap=True),
+            ),
+    y=alt.Y(option_field_y, 
+            scale=alt.Scale(zero=False),
+            axis=alt.Axis(labelOverlap=True),
+            ),
+    color=alt.Y("Major_category"),
+    tooltip=["Major", option_field_y, option_field_x]
+).properties(
+    width=1000, height=750
+).interactive()
+
+st.write(visual_2)
+# second visualization end #
