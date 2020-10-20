@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-st.title("Let's analyze some Data about Majors and Jobs!")
+####################### helper functions #######################
 
 @st.cache  # add caching so we load the data only once
 def load_data():
@@ -10,11 +10,12 @@ def load_data():
     recent_grad_url = "https://raw.githubusercontent.com/fivethirtyeight/data/master/college-majors/recent-grads.csv"
     return pd.read_csv(recent_grad_url)
 
+####################### end of helper functions #######################
+
+
+st.title("Let's analyze some Data about Majors and Jobs!")
+
 df = load_data()
-
-# st.write("Let's look at raw data in the Pandas Data Frame.")
-
-# st.write(df)
 
 st.write("Here is the visualization you can play with!")
 
@@ -24,7 +25,7 @@ useful_cols = [df.columns[i] \
 
 option_field = st.selectbox(
     'Choose a field!',
-     useful_cols)  
+     useful_cols)
 
 explanations = { "Total"        :"Total number of people with major",
                 "Sample_size"   :"Sample size (unweighted) of full-time, year-round ONLY (used for earnings)",
@@ -56,15 +57,13 @@ avg_brush = alt.selection(type='interval', encodings=['y'])
 chart = alt.Chart(df).mark_bar().encode(
     x=alt.X(option_field, scale=alt.Scale(zero=False),),
     y=alt.Y("Major", scale=alt.Scale(zero=False),
-            sort = '-x', 
+            sort = '-x',
             axis=alt.Axis(labelOverlap=True)),
     color=alt.Y("Major_category"),
     opacity=alt.condition(avg_brush, alt.OpacityValue(1), alt.OpacityValue(0.4)),
     tooltip=["Major", "Major_category", option_field]
 ).add_selection(
     avg_brush
-).properties(
-    width=1000, height=750
 )
 
 avg_line = alt.Chart(df).mark_rule(color='firebrick').encode(
@@ -72,8 +71,6 @@ avg_line = alt.Chart(df).mark_rule(color='firebrick').encode(
     size=alt.SizeValue(3)
 ).transform_filter(
     avg_brush
-).properties(
-    width=1000, height=750
 )
 
 visual_1 = alt.layer(chart, avg_line)
@@ -85,26 +82,24 @@ st.write(visual_1)
 # second visualization #
 option_field_x = st.selectbox(
     'Choose a field for the x-axis!',
-     useful_cols)  
+     useful_cols)
 
 option_field_y = st.selectbox(
     'Choose a field for the y-axis!',
-     useful_cols)  
+     useful_cols)
 
 visual_2 = alt.Chart(df).mark_circle().encode(
-    x=alt.X(option_field_x, 
+    x=alt.X(option_field_x,
             scale=alt.Scale(zero=False),
             axis=alt.Axis(labelOverlap=True),
             ),
-    y=alt.Y(option_field_y, 
+    y=alt.Y(option_field_y,
             scale=alt.Scale(zero=False),
             axis=alt.Axis(labelOverlap=True),
             ),
     color=alt.Y("Major_category"),
     tooltip=["Major", option_field_y, option_field_x]
-).properties(
-    width=1000, height=750
-).interactive()
+)
 
 st.write(visual_2)
 # second visualization end #
