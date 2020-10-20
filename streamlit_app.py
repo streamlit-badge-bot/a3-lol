@@ -12,14 +12,14 @@ def load_data():
 
 ####################### end of helper functions #######################
 
-
 st.title("Let's analyze some Data about Majors and Jobs!")
-
 df = load_data()
 
-st.write("Here is the visualization you can play with!")
+st.header("Let's explore various statistics of all majors!")
 
-# slect box #
+# first visualization #
+
+# select box #
 useful_cols = [df.columns[i] \
                for i in range(len(df.columns)) if i not in [0,1,2,6]]
 
@@ -47,10 +47,7 @@ explanations = { "Total"        :"Total number of people with major",
                 }
 
 st.write(explanations[option_field])
-
-# slect box end #
-
-# first visualization #
+# select box end #
 
 avg_brush = alt.selection(type='interval', encodings=['y'])
 
@@ -80,10 +77,12 @@ avg_line = alt.Chart(df).mark_rule(color='firebrick').encode(
 visual_1 = alt.layer(chart, avg_line)
 
 st.write(visual_1)
-
 # first visualization end #
 
+
 # second visualization #
+st.header("Try to see some correlations between two statistics of your choice!")
+
 option_field_x = st.selectbox(
     'Choose a field for the x-axis!',
      useful_cols)
