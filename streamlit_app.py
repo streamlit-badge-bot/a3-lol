@@ -64,6 +64,8 @@ chart = alt.Chart(df).mark_bar().encode(
     tooltip=["Major", "Major_category", option_field]
 ).add_selection(
     avg_brush
+).properties(
+    width=1000, height=750
 )
 
 avg_line = alt.Chart(df).mark_rule(color='firebrick').encode(
@@ -71,6 +73,8 @@ avg_line = alt.Chart(df).mark_rule(color='firebrick').encode(
     size=alt.SizeValue(3)
 ).transform_filter(
     avg_brush
+).properties(
+    width=1000, height=750
 )
 
 visual_1 = alt.layer(chart, avg_line)
@@ -99,6 +103,8 @@ visual_2 = alt.Chart(df).mark_circle().encode(
             ),
     color=alt.Y("Major_category"),
     tooltip=["Major", option_field_y, option_field_x]
+).properties(
+    width=1000, height=750
 )
 
 st.write(visual_2)
