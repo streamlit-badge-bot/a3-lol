@@ -80,7 +80,7 @@ def draw_major_statistics(df, selected, useful_cols):
 def draw_correlations(df, selected, useful_cols):
     # second visualization #
     
-    st.header("Try to see some correlations between two statistics of your choice!")
+    st.header("Try to see some correlations and distributions between two statistics of your choice!")
     filtered_df = df.loc[df["Major_category"].isin(selected)]
     option_field_x = st.selectbox(
         'Choose a field for the x-axis!',
@@ -114,10 +114,10 @@ def draw_correlations(df, selected, useful_cols):
         x=alt.X("Major", scale=alt.Scale(zero=False),
                 sort = '-y',
                 axis=alt.Axis(labelOverlap=True)),
-        color=alt.Y("Major_category"),
-        opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.4)),
-    ).add_selection(
-        brush
+        color=alt.condition(brush,
+                            alt.Color('Major_category:N', legend=None),
+                            alt.value('lightgray')), 
+        tooltip=["Major", "Major_category"],
     ).properties(
         width=400, height=400
     )        
