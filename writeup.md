@@ -1,4 +1,4 @@
-# Project name
+# College Majors Exploration - Group a3-lol
 
 ![](screenshot1.png)
 ![](screenshot2.png)
