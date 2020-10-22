@@ -5,15 +5,13 @@ import altair as alt
 ######################### global tables ########################
 
 explanations = { "Total"        :"Total number of people with major",
-                "Sample_size"   :"Sample size (unweighted) of full-time, year-round ONLY (used for earnings)",
                 "Men"           :"Male graduates",
                 "Women"         :"Female graduates",
-                "ShareWomen"    :"Women as share of total",
-                "Employed"      :"Number employed",
+                "Employed"      :"Number of employed",
                 "Full_time"     :"Employed 35 hours or more",
                 "Part_time"     :"Employed less than 35 hours",
                 "Full_time_year_round":"Employed at least 50 weeks and at least 35 hours",
-                "Unemployed"    :"Number unemployed",
+                "Unemployed"    :"Number of unemployed",
                 "Unemployment_rate":"Unemployed / (Unemployed + Employed)",
                 "Median"        :"Median earnings of full-time, year-round workers",
                 "P25th"         :"25th percentile of earnings",
@@ -122,7 +120,7 @@ def draw_correlations(df, selected, useful_cols):
     ).add_selection(
         brush
     ).properties(
-        width=400, height=400
+        width=1000, height=400
     )
 
     support_chart = alt.Chart(filtered_df).mark_bar().encode(
@@ -134,18 +132,18 @@ def draw_correlations(df, selected, useful_cols):
                             alt.value('lightgray')),
         tooltip=["Major", "Major_category"],
     ).properties(
-        width=400, height=400
+        width=400, height=300
     )
 
-    visual_2 = corr | \
-        support_chart.encode(y=alt.Y(option_field_x, scale=alt.Scale(zero=False))) | \
-            support_chart.encode(y=alt.Y(option_field_y, scale=alt.Scale(zero=False)))
+    visual_2 = corr & \
+        (support_chart.encode(y=alt.Y(option_field_x, scale=alt.Scale(zero=False))) | \
+        support_chart.encode(y=alt.Y(option_field_y, scale=alt.Scale(zero=False))))
+
 
     st.write(visual_2)
     # second visualization end #
 
 ####################### end of helper functions #######################
-
 df = load_data()
 categories = df["Major_category"].unique()
 useful_cols = [explanations[df.columns[i]] for i in range(len(df.columns)) \
