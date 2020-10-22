@@ -6,10 +6,17 @@
 
 <!-- TODO: **A clear description of the goals of your project.** Describe the question that you are enabling a user to answer. The question should be compelling and the solution should be focused on helping users achieve their goals.  -->
 
+Nowadays students have a wide range of majors that they can pursue as a college student. However, will every college majors ensure similar economic standing after graduation? We want to investigate into the relationship between college majors and their corresponding economic status. The dataset [College Majors](https://github.com/fivethirtyeight/data/blob/master/college-majors/recent-grads.csv) we chose contains information about a total of 173 college majors, including various statistics to quantitatively describe a major from an economic perspective. For example, it contains median earnings for each majors. The statistics allow us to understand college majors and the corresponding economic income after graduation.
+
 The main goal of our project is to enable users to find useful information about jobs and majors. Our main target users are those who start their college and need some job-related information to help them pick a major, or those who will graduate recently and try to find how competent is his/her major in the job market. Moreover, this project is also designed for researchers who want to investigate social issues in terms of jobs, gender and majors (e.g., Does median wages correlate to women share of a specific major?).
 
+In particular, as students of the School of Computer Science at Carnegie Mellon University, we want to figure out whether our major is the most profitable major among all of the 173 college majors :)
 
-TODO: add specific compiling questions & solutions for our dataset
+Several other interesting questions can be investigated while playing around with the tool we built:
+
+- Are STEM majors more profitable than other majors?
+- Are there less women in STEM majors?
+- Do any of two statistics have some correlations between each other?
 
 
 ## Design
@@ -39,6 +46,6 @@ TODO: add correlation & describe the purpose
 
 2. Data understanding: After choosing the target dataset [College major data](https://github.com/fivethirtyeight/data/tree/master/college-majors), both teammates spent time on analyzing the nature of the data and figure out what are some interesting questions to be discovered by this kind of dataset. In total, it took 5 hours for us to determine what kind of visualization suit best for this dataset, and what are the valuable part should be presented to the users.
 
-3. Implementation: Data fetching, filtering, and displaying are performed with Streamlit. Shaobo (shaobog) focused on creating visualizations on given data, and utilizing bar charts and scatter plots to display the dataset correspondingly. Yuxi (yuxiluo) focused on filtering the data, providing category selection to provide additional freedom for the users to manipulate the displayed data, and fine-tuning the final version of the website. Both of the teammates spent time to evaluate the current process and determine the next steps to improve current visualizations. In total, it took 20 hours for us to finalize the entire visualization.
+3. Implementation: Data fetching, filtering, and displaying are performed with Streamlit. Shaobo (shaobog) focused on creating visualizations on given data, and utilizing bar charts and scatter plots to display the dataset correspondingly. Yuxi (yuxiluo) focused on filtering the data, providing category selection to provide additional freedom for the users to manipulate the displayed data, fine-tuning the final version of the website, and finalizing the narrative of the visualizations. Both of the teammates spent time to evaluate the current process and determine the next steps to improve current visualizations. In total, it took 25 hours for us to finalize the entire visualization.
 
 The Implementation took the most time, because for each visualization we iteratively provided ideas to improve the visualizations. For each specific functionality, there were many bugs we spent time to work on so that the final implementation is bug-free and well-structured.
