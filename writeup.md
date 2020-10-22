@@ -1,5 +1,8 @@
 # College Majors Exploration - Group a3-lol
 
+![](v_1.gif)
+![](v_2.gif)
+![](v_3.gif)
 ![](screenshot1.png)
 ![](screenshot2.png)
 ![](screenshot3.png)

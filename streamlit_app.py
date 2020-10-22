@@ -129,7 +129,7 @@ def draw_correlations(df, selected, useful_cols):
 
     st.write(
     """
-    ### Scatter plot for two statistics of your choise
+    ### Scatter plot for two statistics of your choice
 
     #### Instructions for use:
     - From the sidebar on the left, you can narrow down the major categories as you wish, by selecting / deselecting them to interact with filtered data
