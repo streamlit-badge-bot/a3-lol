@@ -1,24 +1,25 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import numpy as np
 
 ######################### global tables ########################
 
-explanations = { "Total"        :"Total number of people with major",
-                "Men"           :"Male graduates",
-                "Women"         :"Female graduates",
-                "Employed"      :"Number of employed",
-                "Full_time"     :"Employed 35 hours or more",
-                "Part_time"     :"Employed less than 35 hours",
-                "Full_time_year_round":"Employed at least 50 weeks and at least 35 hours",
-                "Unemployed"    :"Number of unemployed",
-                "Unemployment_rate":"Unemployed / (Unemployed + Employed)",
-                "Median"        :"Median earnings of full-time, year-round workers",
-                "P25th"         :"25th percentile of earnings",
-                "P75th"         :"75th percentile of earnings",
-                "College_jobs"  :"Number with job requiring a college degree",
-                "Non_college_jobs":"Number with job not requiring a college degree",
-                "Low_wage_jobs" :"Number in low-wage service jobs"
+explanations = { "Total"        :"Total: Total number of people with major",
+                "Men"           :"Men: Male graduates",
+                "Women"         :"Women: Female graduates",
+                "Employed"      :"Employed: Number of employed",
+                "Full_time"     :"Full_time: Employed 35 hours or more",
+                "Part_time"     :"Part_time: Employed less than 35 hours",
+                "Full_time_year_round":"Full_time_year_round: Employed at least 50 weeks and at least 35 hours",
+                "Unemployed"    :"Unemployed: Number of unemployed",
+                "Unemployment_rate":"Unemployment_rate: Unemployed / (Unemployed + Employed)",
+                "Median"        :"Median: Median earnings of full-time, year-round workers",
+                "P25th"         :"P25th: 25th percentile of earnings",
+                "P75th"         :"P75th: 75th percentile of earnings",
+                "College_jobs"  :"College_jobs: Number with job requiring a college degree",
+                "Non_college_jobs":"Non_college_jobs: Number with job not requiring a college degree",
+                "Low_wage_jobs" :"Low_wage_jobs: Number in low-wage service jobs"
                 }
 rev_explanations = { v : k for k, v in explanations.items() }
 
@@ -58,7 +59,18 @@ def draw_selection(selection):
 
 def draw_major_statistics(df, selected, useful_cols):
     # first visualization #
-    st.header("Let's explore various statistics of all majors!")
+    st.markdown(
+    """
+    ## Let's explore various statistics of all majors!
+
+    #### Instructions for use:
+    - From the sidebar on the left, you can narrow down the major categories as you wish, by selecting / deselecting them to interact with filtered data
+    - You can choose a field to view the statistics of all majors
+    - The red line on the graph indicates the average value of all majors.
+    - You can also select a range of specific majors to measure the average value of the selected majors.
+    """
+    )
+
     filtered_df = df.loc[df["Major_category"].isin(selected)]
 
     # select box #
@@ -95,8 +107,65 @@ def draw_major_statistics(df, selected, useful_cols):
     # first visualization end #
 
 def draw_correlations(df, selected, useful_cols):
+    st.write(
+    """
+    ## Let's discover correlations between any two statistics of your choice!
+    """
+    )
+    st.write(
+    """
+    ### Correlation matrix for all statistics
+
+    To explore potential correlations among all statistics, a correlation matrix is calculated to check whether any two of the statistics correlate with each other. The matrix is visualized as below, with their correlation values colored from light to dark. As the color goes darker, the two statistics are more correlated with each other.
+
+    This correlation graph serves as a reference for users to explore potential correlations between any two statistics. Some findings we discovered while analyzing the graph are:
+    - Low Wage Jobs is highly correlated with Non-College Jobs
+    - College Jobs is more corrrelated with Women than Men
+
+    We encourage users to refer to this matrix while exploring the potential correlations for the statistics. We also welcome more insights that can be discovered!
+    """
+    )
+    draw_corr_heatmap(df, selected, useful_cols)
+
+    st.write(
+    """
+    ### Scatter plot for two statistics of your choise
+
+    #### Instructions for use:
+    - From the sidebar on the left, you can narrow down the major categories as you wish, by selecting / deselecting them to interact with filtered data
+    - You can choose any of the two fields to explore the potential correlation between them
+    - There are two subvisualizations to help investigating the exact value of the selected fields
+    - You can also select a range of specific majors to closely look at the corresponding values from the two subvisualizations
+    """
+    )
+    draw_corr_scatter(df, selected, useful_cols)
+
+def draw_corr_heatmap(df, selected, useful_cols):
+    filtered_df = df.loc[df["Major_category"].isin(selected)]
+    discarded = ['Rank', 'Major_code', 'Major', 'Major_category', 'Sample_size', 'ShareWomen']
+    for i in discarded:
+        filtered_df = filtered_df.drop(i, axis=1)
+    # calculate correlation
+    corr = filtered_df.corr()
+    x, y = np.meshgrid(corr.index, corr.columns)
+    corr_df = pd.DataFrame({
+        "FieldsX": x.ravel(),
+        "FieldsY": y.ravel(),
+        "Correlation": corr.values.ravel(),
+    })
+    # plot heatmap
+    chart = alt.Chart(corr_df).mark_rect().encode(
+        x="FieldsX:O",
+        y="FieldsY:O",
+        color="Correlation:Q",
+        tooltip=["FieldsX", "FieldsY", "Correlation"]
+    ).properties(
+        width=700, height=600
+    )
+    st.write(chart)
+
+def draw_corr_scatter(df, selected, useful_cols):
     # second visualization #
-    st.header("Try to see some correlations and distributions between two statistics of your choice!")
     filtered_df = df.loc[df["Major_category"].isin(selected)]
 
     # select box #
