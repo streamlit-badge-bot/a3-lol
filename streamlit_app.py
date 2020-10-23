@@ -37,7 +37,8 @@ def draw_title():
         # Lets's analyze some data about College Majors!
 
         Made by Shaobo Guan (shaobog) and Yuxi Luo (yuxiluo)
-        - Github repository: [Group a3-lol](https://github.com/CMU-IDS-2020/a3-lol)
+        - [Github repository](https://github.com/CMU-IDS-2020/a3-lol)
+        - [Project WriteUp](https://github.com/CMU-IDS-2020/a3-lol/blob/master/writeup.md)
 
         ## Project Overview
 

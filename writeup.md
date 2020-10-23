@@ -1,5 +1,8 @@
 # College Majors Exploration - Group a3-lol
 
+- Team members: Shaobo Guan (shaobog) and Yuxi Luo (yuxiluo)
+- Online URL: https://share.streamlit.io/cmu-ids-2020/a3-lol/
+
 ![](image/v_1.gif)
 ![](image/v_2.gif)
 ![](image/v_3.gif)
