@@ -23,7 +23,7 @@ Several other interesting questions can be investigated while playing around wit
 
 ### Major Categories sidebar
 
-![Major Categories sidebar](image/sidebar.png)
+![Major Categories sidebar](image/v_4.png)
 
 Firstly, our project provides a multi-select box to enable users to pick major categories they want to focus on investigating: for example, Engineering, Law, and Mathematics, etc. The reason for this filter functionality is that instead of all majors, users probably tend to know information about some specific ones. In this way, users can filter out the undesired majors from the visualization to better focus on the selected ones.
 
