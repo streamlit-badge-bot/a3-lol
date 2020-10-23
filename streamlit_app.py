@@ -54,7 +54,12 @@ def draw_title():
     )
 
 def draw_selection(selection):
-    selected = st.sidebar.multiselect('Choose some major categories!', selection, default=selection)
+    st.sidebar.markdown(
+    """
+    ### Filtering the College Majors data by major categories
+    """
+    )
+    selected = st.sidebar.multiselect("Choose some major categories to explore!", selection, default=selection)
     return selected
 
 def draw_major_statistics(df, selected, useful_cols):
@@ -66,8 +71,8 @@ def draw_major_statistics(df, selected, useful_cols):
     #### Instructions for use:
     - From the sidebar on the left, you can narrow down the major categories as you wish, by selecting / deselecting them to interact with filtered data
     - You can choose a field to view the statistics of all majors
-    - The red line on the graph indicates the average value of all majors.
-    - You can also select a range of specific majors to measure the average value of the selected majors.
+    - The red line on the graph indicates the average value of all majors
+    - You can also select a range of specific majors to measure the average value of of the statistics
     """
     )
 
@@ -118,11 +123,9 @@ def draw_correlations(df, selected, useful_cols):
 
     To explore potential correlations among all statistics, a correlation matrix is calculated to check whether any two of the statistics correlate with each other. The matrix is visualized as below, with their correlation values colored from light to dark. As the color goes darker, the two statistics are more correlated with each other.
 
-    This correlation graph serves as a reference for users to explore potential correlations between any two statistics. Some findings we discovered while analyzing the graph are:
+    This correlation graph serves as a reference for users to explore potential correlations between any two statistics. Some findings we discovered while analyzing the graph are listed below. It would be also interesting to look at the statistics under specific major categories. We also encourage users to explore and discover more insighs about the statistics!
     - Low Wage Jobs is highly correlated with Non-College Jobs
-    - College Jobs is more corrrelated with Women than Men
-
-    We encourage users to refer to this matrix while exploring the potential correlations for the statistics. We also welcome more insights that can be discovered!
+    - College Jobs is more correlated with Women than Men
     """
     )
     draw_corr_heatmap(df, selected, useful_cols)
@@ -157,10 +160,10 @@ def draw_corr_heatmap(df, selected, useful_cols):
     chart = alt.Chart(corr_df).mark_rect().encode(
         x="FieldsX:O",
         y="FieldsY:O",
-        color="Correlation:Q",
+        color=alt.Color("Correlation:Q", scale=alt.Scale(scheme='yellowgreenblue')),
         tooltip=["FieldsX", "FieldsY", "Correlation"]
     ).properties(
-        width=700, height=600
+        width=650, height=550
     )
     st.write(chart)
 
@@ -189,7 +192,7 @@ def draw_corr_scatter(df, selected, useful_cols):
     ).add_selection(
         brush
     ).properties(
-        width=1000, height=400
+        width=900, height=400
     )
 
     support_chart = alt.Chart(filtered_df).mark_bar().encode(
