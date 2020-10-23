@@ -56,7 +56,7 @@ def draw_title():
 def draw_selection(selection):
     st.sidebar.markdown(
     """
-    ### Filtering the College Majors data by major categories
+    ### Major Categories selection
     """
     )
     selected = st.sidebar.multiselect("Choose some major categories to explore!", selection, default=selection)
@@ -126,6 +126,7 @@ def draw_correlations(df, selected, useful_cols):
     This correlation graph serves as a reference for users to explore potential correlations between any two statistics. Some findings we discovered while analyzing the graph are listed below. It would be also interesting to look at the statistics under specific major categories. We also encourage users to explore and discover more insighs about the statistics!
     - Low Wage Jobs is highly correlated with Non-College Jobs
     - College Jobs is more correlated with Women than Men
+    - (more to be discovered)
     """
     )
     draw_corr_heatmap(df, selected, useful_cols)
@@ -192,7 +193,7 @@ def draw_corr_scatter(df, selected, useful_cols):
     ).add_selection(
         brush
     ).properties(
-        width=900, height=400
+        width=850, height=400
     )
 
     support_chart = alt.Chart(filtered_df).mark_bar().encode(
