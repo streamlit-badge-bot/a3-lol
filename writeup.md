@@ -21,7 +21,7 @@ Several other interesting questions can be investigated while playing around wit
 
 ## Design
 
-### Major Categories sidebar
+### Major Categories Sidebar
 
 ![Major Categories sidebar](image/v_4.png)
 
@@ -30,7 +30,7 @@ Firstly, our project provides a multi-select box to enable users to pick major c
 We considered other alternatives to achieve this functionality. For example, we could introduce another dropdown menu for every visualizations to allow users to select the major categories, but this kind of solution introduces redundant buttons for users to select, which worsens the experience of using our visualization.
 
 
-### Statistics on all majors
+### Statistics on All Majors
 
 ![Statistics](image/v_1.gif)
 
@@ -38,7 +38,7 @@ The first visualization demonstrates aggregated data with respect to majors and 
 
 We thought about using scatter plots to visualize this data, but found that they are deficient to visually reflect different quantities, so we choose bar charts instead to help displaying this kind of information.
 
-### Correlation exploration on statistics
+### Correlation Exploration on Statistics
 
 The second visualization is used for revealing statistical relationships between fields, which is served more as a tool than a conclusion drawn by the visualization makers.
 
